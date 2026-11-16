@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Открыть Сообщения</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f6f1ea;font:17px/1.4 -apple-system,system-ui,sans-serif;color:#2b2420}
+.c{width:100%;max-width:420px;padding:24px}
+.num{font-size:26px;font-weight:700;margin:6px 0 18px}
+a,button{display:block;width:100%;box-sizing:border-box;text-align:center;border-radius:999px;padding:16px;font:inherit;font-weight:600;text-decoration:none;border:0;margin-top:10px;cursor:pointer}
+a{background:#2b2420;color:#fff}button{background:#fff;color:#2b2420;border:1px solid #e8dfd4}
+pre{white-space:pre-wrap;background:#fff;border:1px solid #e8dfd4;border-radius:12px;padding:12px;font:15px/1.4 inherit;margin:14px 0 0}
+small{color:#8a7f76}
+</style></head>
+<body><div class="c">
+<small>SMS для</small><div class="num" id="num"></div>
+<a id="open" href="#">Открыть «Сообщения»</a>
+<button id="copy">Скопировать текст</button>
+<pre id="txt"></pre>
+<p><small>Номер и текст передаются только в ссылке на твоём телефоне и не попадают на сервер.</small></p>
+</div>
+<script>
+var h=new URLSearchParams(location.hash.slice(1)),to=(h.get("to")||"").replace(/[^\d+]/g,""),body=h.get("body")||"";
+document.getElementById("num").textContent=to||"номер не указан";
+document.getElementById("txt").textContent=body;
+var url="sms:"+to+(body?"&body="+encodeURIComponent(body):"");
+document.getElementById("open").href=url;
+document.getElementById("copy").onclick=function(){navigator.clipboard.writeText(body).then(function(){document.getElementById("copy").textContent="Скопировано ✓"})};
+</script></body></html>
